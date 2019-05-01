@@ -6,7 +6,7 @@ UDP socket Programming
 
 send: dev_name, msg_version, GPS
 
-<command>
+
 make yungoo
 ./yungoo
 make clean
