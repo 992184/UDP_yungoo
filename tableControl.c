@@ -31,10 +31,14 @@ void insert(struct Table *table, int key, Message *val){
 	struct Entry *list = table->list[pos];
 	struct Entry *newEntry = (struct Entry*)malloc(sizeof(struct Entry));
 	struct Entry *temp = list;
+	struct Message* temp_msg = val;
 
 	while(temp){
-		if(temp->key == key){	//if exist, update
-			temp->val = val;
+		if(temp->key == key){	//if exist
+			temp_msg = temp->val;	//compare version
+			if(temp_msg->msg_version < val->msg_version){
+				temp->val = val;	//update val
+			}
 		}
 		temp = temp->next;
 	} 

@@ -32,7 +32,7 @@ void* sender(void* arg){
 										//if sth in the queue
 		if(!IsEmpty(&queue)){
 			msg = Dequeue(&queue);
-			printf("msg: %d\n", msg);
+			//printf("msg: %d\n", msg);
 			printf("[Dequeue]\n");		//Dequeue
 		} else{							//if queue is empty
 			msg = temp;					//put temp to msg
@@ -49,7 +49,7 @@ void* sender(void* arg){
 		sendto(sockfd, send_msg, sizeof(Message), 
 			MSG_CONFIRM, (const struct sockaddr *) &servaddr, 
 				sizeof(servaddr)); 
-		printf("sender(): send %d\n", msg); 
+		printf("sender(): [%s] send %d\n\n", send_msg->dev_name, msg); 
 		
 		sleep(1);	//every 1 second
 	}
@@ -60,7 +60,7 @@ void* sender(void* arg){
 void* receiver(void* arg){
 	int sockfd = (int)arg; 
 	char buffer[MAXLINE]; 
-	//char *hello = "Hello from server"; 
+	//char* hello = "Hello from server"; 
 	struct sockaddr_in servaddr, cliaddr; 
 	
 	memset(&servaddr, 0, sizeof(servaddr)); 
@@ -97,11 +97,12 @@ void* receiver(void* arg){
 		//recv_msg->msg_version = recv_i;
 	
 		recv_i = (recv_msg->msg_version);
-	
-		insert(table, 1, recv_i);			//key=1, val=msg_version
+	//	int recv_name = atoi(recv_msg->dev_name);
+
+		insert(table, 1, recv_msg);			//key=1, val=msg_version
 		printf("KEY:1, VAL: %d\n", recv_i);
 		Enqueue(&queue, recv_msg);			//put buffer to queue
-		printf("QUEUE GETS %s\n", buffer);
+		printf("QUEUE GETS %s\n\n", buffer);
 	}
 }
 
