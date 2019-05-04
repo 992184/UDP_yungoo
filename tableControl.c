@@ -28,7 +28,10 @@ int HashCode(struct Table *table, int key){
 	//return key%table->size;
 }
 
+
 void insert(struct Table *table, Message *val){
+	
+	bool isExist = false;
 	//set key
 	int key = val->dev_num;
 	int pos = HashCode(table, key);
@@ -37,38 +40,26 @@ void insert(struct Table *table, Message *val){
 	struct Entry *list = table->list[pos];
 	struct Entry *newEntry = (struct Entry*)malloc(sizeof(struct Entry));
 	struct Entry *temp = list;
-	struct Message* temp_msg = val;
-	/*	
-	if(list->key == key){
-		if(temp_msg->msg_version < val->msg_version){
-			//printf("%d\n", temp_msg->msg_version);
-			list->val = val;
+	struct Message* temp_msg;
+	//printf("list->key: %d\n", list->key);		
+	while(temp){
+		if(temp->key == key){	//if exist
+			temp_msg = temp->val;	//compare version
+			if(temp_msg->msg_version <= val->msg_version){
+				temp->val = val;	//update val
+			}
+			isExist = true;
 		}
+		temp = temp->next;
 	}
-	else{
+	
+	//if not exist
+	if(!isExist){
 		newEntry->key = key;
 		newEntry->val = val;
 		newEntry->next = list;
 		table->list[pos] = newEntry;
 	}
-	*/
-	
-	while(temp){
-		if(temp->key == key){	//if exist
-			temp_msg = temp->val;	//compare version
-			if(temp_msg->msg_version < val->msg_version){
-				temp->val = val;	//update val
-			}
-		}
-		temp = temp->next;
-	}
-
-	newEntry->key = key;
-	newEntry->val = val;
-	newEntry->next = list;
-	table->list[pos] = newEntry;
-
-	
 }
 
 //search by key -> return val
