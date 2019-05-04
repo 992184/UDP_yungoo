@@ -12,6 +12,8 @@
 #define PORT		2000
 #define MAXDEV		10
 
+#define DEVNUM		1
+
 /*location struct*/
 typedef struct LI{
 	double	loc_x;
@@ -21,7 +23,7 @@ typedef struct LI{
 
 /*Message struct*/
 typedef struct Message{
-	char		*dev_name;	
+	int			dev_num;	
 	int 		msg_version;	
 	struct LI	loc_info;
 }Message;

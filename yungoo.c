@@ -42,14 +42,14 @@ void* sender(void* arg){
 		
 		//Filling Message information
 		Message *send_msg = (Message*)malloc(sizeof(Message));
-		send_msg->dev_name = "apple";
+		send_msg->dev_num = DEVNUM;	//set device number
 		send_msg->msg_version= msg;	//set version to seq num
 
 		//send struct Message
 		sendto(sockfd, send_msg, sizeof(Message), 
 			MSG_CONFIRM, (const struct sockaddr *) &servaddr, 
 				sizeof(servaddr)); 
-		printf("sender(): [%s] send %d\n\n", send_msg->dev_name, msg); 
+		printf("sender(): [%d] send %d\n\n", send_msg->dev_num, msg); 
 		
 		sleep(1);	//every 1 second
 	}
@@ -91,7 +91,7 @@ void* receiver(void* arg){
 		buffer[n] = '\0';
 		//if get sth
 		printf("receiver() received: %d\n", recv_msg->msg_version); 
-		printf("receive msg from: %s\n", recv_msg->dev_name);
+		printf("receive msg from: %d\n", recv_msg->dev_num);
 		//recv_i = atoi(buffer);
 		//Message *recv_msg = (Message*)malloc(sizeof(Message));
 		//recv_msg->msg_version = recv_i;
@@ -99,8 +99,8 @@ void* receiver(void* arg){
 		recv_i = (recv_msg->msg_version);
 	//	int recv_name = atoi(recv_msg->dev_name);
 
-		insert(table, 1, recv_msg);			//key=1, val=msg_version
-		printf("KEY:1, VAL: %d\n", recv_i);
+		insert(table, recv_msg->dev_num, recv_msg);			//key=device number, val=msg_version
+		printf("KEY:%d, VAL: %d\n", recv_msg->dev_num, recv_i);
 		Enqueue(&queue, recv_msg);			//put buffer to queue
 		printf("QUEUE GETS %s\n\n", buffer);
 	}
