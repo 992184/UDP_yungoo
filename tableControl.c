@@ -78,6 +78,20 @@ int Search(struct Table *table, int key){
 
 //print all the table item
 void printTable(Table *table){
+
+	Entry* temp = table->list[0];// = (Entry*)malloc(sizeof())
+	Message* temp_msg;// = temp->val;
+	printf("==========TABLE==========\n");
+		for(int i = 0; i<MAXDEV; i++){
+			temp = table->list[i];
+			if(temp != NULL){					
+				temp_msg = temp->val;															
+				printf("FROM: %2d, MSG: %2d\n", temp_msg->dev_num, temp_msg->msg_version);	
+			}
+		}		        
+	printf("===========END===========\n\n");
+
+		/*
 	struct Entry *temp = table->list[1];//from first DEVNUM
 	struct Message *temp_msg;
 	printf("==========TABLE==========\n");
@@ -87,4 +101,5 @@ void printTable(Table *table){
 		temp = temp->next;
 	}
 	printf("===========END===========\n\n");
+*/
 }

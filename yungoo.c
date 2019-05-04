@@ -23,7 +23,7 @@ void* sender(void* arg){
 	// Filling server information 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_port = htons(PORT); 
-	servaddr.sin_addr.s_addr = INADDR_ANY; 
+	servaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr("172.30.1.60");//INADDR_ANY; 
 	
 	int msg = 1; 	//seq num which send
 	int temp = 1;	//seq num
