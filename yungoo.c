@@ -92,17 +92,15 @@ void* receiver(void* arg){
 		//if get sth
 		printf("receiver() received: %d\n", recv_msg->msg_version); 
 		printf("receive msg from: %d\n", recv_msg->dev_num);
-		//recv_i = atoi(buffer);
-		//Message *recv_msg = (Message*)malloc(sizeof(Message));
-		//recv_msg->msg_version = recv_i;
 	
 		recv_i = (recv_msg->msg_version);
-	//	int recv_name = atoi(recv_msg->dev_name);
+		//int recv_name = atoi(recv_msg->dev_name);
 
-		insert(table, recv_msg->dev_num, recv_msg);			//key=device number, val=msg_version
+		insert(table, recv_msg);			//key=device number, val=msg_version
 		printf("KEY:%d, VAL: %d\n", recv_msg->dev_num, recv_i);
 		Enqueue(&queue, recv_msg);			//put buffer to queue
-		printf("QUEUE GETS %s\n\n", buffer);
+		//printf("QUEUE GETS %s\n\n", buffer);
+		printTable(table);
 	}
 }
 

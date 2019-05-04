@@ -19,20 +19,40 @@ struct Table *CreateTable(int size){
 	return table;
 }
 
+//key into position
 int HashCode(struct Table *table, int key){
 	if(key<0){
 		return -1;
 	}
-	return key%table->size;
+	return key;
+	//return key%table->size;
 }
 
-void insert(struct Table *table, int key, Message *val){
+void insert(struct Table *table, Message *val){
+	//set key
+	int key = val->dev_num;
 	int pos = HashCode(table, key);
+
+	//get entry
 	struct Entry *list = table->list[pos];
 	struct Entry *newEntry = (struct Entry*)malloc(sizeof(struct Entry));
 	struct Entry *temp = list;
 	struct Message* temp_msg = val;
-
+	/*	
+	if(list->key == key){
+		if(temp_msg->msg_version < val->msg_version){
+			//printf("%d\n", temp_msg->msg_version);
+			list->val = val;
+		}
+	}
+	else{
+		newEntry->key = key;
+		newEntry->val = val;
+		newEntry->next = list;
+		table->list[pos] = newEntry;
+	}
+	*/
+	
 	while(temp){
 		if(temp->key == key){	//if exist
 			temp_msg = temp->val;	//compare version
@@ -41,11 +61,14 @@ void insert(struct Table *table, int key, Message *val){
 			}
 		}
 		temp = temp->next;
-	} 
+	}
+
 	newEntry->key = key;
 	newEntry->val = val;
 	newEntry->next = list;
 	table->list[pos] = newEntry;
+
+	
 }
 
 //search by key -> return val
@@ -59,17 +82,18 @@ int Search(struct Table *table, int key){
 		}
 		temp = temp->next;
 	}
-	return -1;	//can't find
+	return -1;	//can
 }
 
-//Check Complete
-/*
-int main(){
-	struct Table *t = CreateTable(5);
-	insert(t, 2, 3);
-	insert(t, 5, 4);
-	printf("%d", Search(t, 5));
-	return 0;
+//print all the table item
+void printTable(Table *table){
+	struct Entry *temp = table->list[1];//from first DEVNUM
+	struct Message *temp_msg;
+	printf("==========TABLE==========\n");
+	while(temp){
+		temp_msg = temp->val;
+		printf("FROM: %2d, MSG: %2d\n", temp_msg->dev_num, temp_msg->msg_version);
+		temp = temp->next;
+	}
+	printf("===========END===========\n\n");
 }
-*/
-

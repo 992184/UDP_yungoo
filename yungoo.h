@@ -42,10 +42,11 @@ typedef struct Table{
 
 struct Table *CreateTable(int size);
 int HashCode(struct Table *table, int key);
-void insert(struct Table *table, int key, Message* val);
+void insert(struct Table *table, Message* val);
 int Search(struct Table *table, int key);
+void printTable(struct Table *table);
 
-/*Queue*/
+/*Buffer Queue*/
 typedef struct Node{
 	struct Message	*data;
 	struct Node 	*next;
