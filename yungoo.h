@@ -26,7 +26,7 @@ typedef struct LI{
 typedef struct Message{
 	int			dev_num;	
 	int 		msg_version;	
-	struct LI	loc_info;
+	struct LI*	loc_info;
 }Message;
 
 /*table*/
