@@ -20,7 +20,7 @@ typedef struct LI{
 	double	loc_x;
 	double	loc_y;
 	double	loc_z;
-}GI;
+}LI;
 
 /*Message struct*/
 typedef struct Message{
@@ -62,6 +62,10 @@ typedef struct Queue{
 void InitQueue(Queue *queue);
 int IsEmpty(Queue *queue);
 void Enqueue(Queue *queue, Message *newMessage);
-int Dequeue(Queue *queue);
+struct Message* Dequeue(Queue *queue);
 
+/*DataGenerator*/
 
+struct Message* newMessage();
+void msg_initiate(Message* newMessage);
+void dataGenerator_newlocation(LI* new_li);

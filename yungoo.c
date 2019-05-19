@@ -23,27 +23,30 @@ void* sender(void* arg){
 	// Filling server information 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_port = htons(PORT); 
-	servaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr("172.30.1.60");//INADDR_ANY; 
+	servaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr("192.168.0.84");//INADDR_ANY; 
 	
 	int msg = 1; 	//seq num which send
 	int temp = 1;	//seq num
-	
+	Message *send_msg;
+
 	while(1){
 										//if sth in the queue
 		if(!IsEmpty(&queue)){
-			msg = Dequeue(&queue);
+			send_msg = Dequeue(&queue);
 			//printf("msg: %d\n", msg);
 			printf("[Dequeue]\n");		//Dequeue
 		} else{							//if queue is empty
-			msg = temp;					//put temp to msg
-			temp++;						//sequence number++
+			send_msg = newMessage();	
+				//msg = temp;					//put temp to msg
+			//temp++;						//sequence number++
 			printf("[Sequence]\n");		//use sequence number
 		}
 		
+		//Message *send_msg = newMessage();
 		//Filling Message information
-		Message *send_msg = (Message*)malloc(sizeof(Message));
-		send_msg->dev_num = DEVNUM;	//set device number
-		send_msg->msg_version= msg;	//set version to seq num
+		//Message *send_msg = (Message*)malloc(sizeof(Message));
+		//send_msg->dev_num = DEVNUM;	//set device number
+		//send_msg->msg_version= msg;	//set version to seq num
 
 		//send struct Message
 		sendto(sockfd, send_msg, sizeof(Message), 
