@@ -32,19 +32,19 @@ void Enqueue(Queue *queue, Message *newMessage){
 	queue->count++;
 }
 
-int Dequeue(Queue *queue){
-	int re = 0;
+struct Message* Dequeue(Queue *queue){
+	Message* msg;
 	Node *delNode;
 	if(IsEmpty(queue)){
-		return re;
+		return NULL;
 	}
 
 	delNode = queue->front;	//delete front
-	re = delNode->data->msg_version;	//return delNode data
+	msg = delNode->data;//->msg_version;	//return delNode data
 	queue->front = delNode->next;
 	free(delNode);
 	queue->count--;
-	return re;
+	return msg;
 }
 /*
 int main(){
