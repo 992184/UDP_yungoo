@@ -12,7 +12,7 @@ void msg_initiate(Message* newMessage){
 	newMessage->dev_num = DEVNUM;
 	newMessage->msg_version = version;
 	newMessage->loc_info = new_li;
-	
+	printf("\n\n version++!!!! \n\n");
 	version++;
 }
 
