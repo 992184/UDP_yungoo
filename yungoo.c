@@ -17,16 +17,21 @@ void* sender(void* arg){
 	int sockfd = (int)arg; 
 	char buffer[MAXLINE]; 
 	struct sockaddr_in	 servaddr; 
+	//int temp;
+	int fBroadcast = 1;
+	int broadTrue = 1;
 
 	memset(&servaddr, 0, sizeof(servaddr)); 
 	
+	setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &broadTrue, sizeof(broadTrue));
+
 	// Filling server information 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_port = htons(PORT); 
-	servaddr.sin_addr.s_addr = INADDR_ANY;//inet_addr("192.168.0.84");//INADDR_ANY; 
+	servaddr.sin_addr.s_addr = (INADDR_BROADCAST);//inet_addr("192.168.0.84");//INADDR_ANY; 
 	
 	int msg = 1; 	//seq num which send
-	int temp = 1;	//seq num
+//	int temp = 1;	//seq num
 	Message *send_msg;
 
 	while(1){
