@@ -6,6 +6,11 @@ LI* current_li;
 void msg_initiate(Message* newMessage){
 	
 	LI* new_li = (LI*)malloc(sizeof(LI));
+
+	new_li->loc_x = (double)version;
+	new_li->loc_y = (double)version;
+	new_li->loc_z = (double)version;
+	
 	//get_location();
 	//if new_li != current_li
 	//dataGenerator_newLocation(new_li);
