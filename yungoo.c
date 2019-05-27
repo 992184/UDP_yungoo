@@ -17,12 +17,12 @@ void* sender(void* arg){
 	int sockfd = (int)arg; 
 	char buffer[MAXLINE]; 
 	struct sockaddr_in	 servaddr; 
-	//int temp;
-	int fBroadcast = 1;
+	//int fBroadcast =1;
 	int broadTrue = 1;
 
 	memset(&servaddr, 0, sizeof(servaddr)); 
 	
+	//UDP broadcast
 	setsockopt(sockfd, SOL_SOCKET, SO_BROADCAST, &broadTrue, sizeof(broadTrue));
 
 	// Filling server information 
@@ -30,8 +30,7 @@ void* sender(void* arg){
 	servaddr.sin_port = htons(PORT); 
 	servaddr.sin_addr.s_addr = (INADDR_BROADCAST);//inet_addr("192.168.0.84");//INADDR_ANY; 
 	
-	int msg = 1; 	//seq num which send
-//	int temp = 1;	//seq num
+	//int msg = 1; 	//seq num which send
 	Message *send_msg;
 
 	while(1){
@@ -57,7 +56,7 @@ void* sender(void* arg){
 		sendto(sockfd, send_msg, sizeof(Message), 
 			MSG_CONFIRM, (const struct sockaddr *) &servaddr, 
 				sizeof(servaddr)); 
-		printf("sender(): [%d] send %d\n\n", send_msg->dev_num, msg); 
+		printf("sender(): [%d] send %d\n\n", send_msg->dev_num, send_msg->msg_version); 
 		
 		sleep(1);	//every 1 second
 	}
@@ -137,9 +136,9 @@ int main() {
 
 	//create thread
 	pthread_create(&send_thread, NULL, sender, (void*)send_sock);
-	pthread_create(&recv_thread, NULL, receiver, (void*)recv_sock);
+	//pthread_create(&recv_thread, NULL, receiver, (void*)recv_sock);
 	//join
-	pthread_join(recv_thread, &thread_result);
+	//pthread_join(recv_thread, &thread_result);
 	pthread_join(send_thread, &thread_result);
 
 		/* 
