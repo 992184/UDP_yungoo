@@ -136,9 +136,9 @@ int main() {
 
 	//create thread
 	pthread_create(&send_thread, NULL, sender, (void*)send_sock);
-	//pthread_create(&recv_thread, NULL, receiver, (void*)recv_sock);
+	pthread_create(&recv_thread, NULL, receiver, (void*)recv_sock);
 	//join
-	//pthread_join(recv_thread, &thread_result);
+	pthread_join(recv_thread, &thread_result);
 	pthread_join(send_thread, &thread_result);
 
 		/* 

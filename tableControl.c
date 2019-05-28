@@ -81,25 +81,22 @@ void printTable(Table *table){
 
 	Entry* temp = table->list[0];// = (Entry*)malloc(sizeof())
 	Message* temp_msg;// = temp->val;
+	LI* temp_li = (LI*)malloc(sizeof(LI));
+	int i;
+	
 	printf("==========TABLE==========\n");
-		for(int i = 0; i<MAXDEV; i++){
+		for(i = 0; i<MAXDEV; i++){
 			temp = table->list[i];
 			if(temp != NULL){					
 				temp_msg = temp->val;															
-				printf("FROM: %2d, MSG: %2d\n", temp_msg->dev_num, temp_msg->msg_version);	
+				temp_li = temp_msg->loc_info;
+
+				printf("FROM: %2d, MSG: %2d \n", temp_msg->dev_num, temp_msg->msg_version);	
+
+				//core dumped when other device run
+				//allocate memory of temp_li, but still error occur
+				//			printf("x: %3f, y: %3f, z: %3f \n", temp_li->loc_x, temp_li->loc_y, temp_li->loc_z);
 			}
 		}		        
 	printf("===========END===========\n\n");
-
-		/*
-	struct Entry *temp = table->list[1];//from first DEVNUM
-	struct Message *temp_msg;
-	printf("==========TABLE==========\n");
-	while(temp){
-		temp_msg = temp->val;
-		printf("FROM: %2d, MSG: %2d\n", temp_msg->dev_num, temp_msg->msg_version);
-		temp = temp->next;
-	}
-	printf("===========END===========\n\n");
-*/
 }
