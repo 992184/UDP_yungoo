@@ -141,19 +141,6 @@ int main() {
 	pthread_join(recv_thread, &thread_result);
 	pthread_join(send_thread, &thread_result);
 
-		/* 
-		   //Queue Test
-	int i;
-	Queue queue;
-
-	InitQueue(&queue);
-	for(i = 1; i<6; i++){
-		Enqueue(&queue, i);
-	}
-	while(!IsEmpty(&queue)){
-		printf("%d", Dequeue(&queue));
-	}
-	*/
 	//sender();
 	//receiver();
 	return 0;
